@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1"/>
+<title>Kedai Yasika - Seblak Topping Seribuan</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Pacifico&display=swap" rel="stylesheet"/>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Outfit',sans-serif}
+html,body{margin:0;padding:0;background:#FFF7E8;min-height:100vh;overflow-x:hidden;width:100%}
+.font-display{font-family:'Pacifico',cursive}
+#kopi-app{width:100%;max-width:100%;margin:0;background:#FFF7E8;min-height:100vh;position:relative;padding-bottom:72px;box-shadow:none}
+.header{background:#7A1F1F;padding:16px 16px 12px;position:sticky;top:0;z-index:20}
+.header-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+.logo-wrap{display:flex;align-items:center;gap:8px}
+.logo-circle{width:36px;height:36px;border-radius:50%;background:#FFD8A6;display:flex;align-items:center;justify-content:center;font-size:18px}
+.logo-text{font-family:'Pacifico',cursive;color:#fff;font-size:22px;letter-spacing:.5px;line-height:0.9}
+.logo-sub{font-size:10px;color:#FFD8A6;font-weight:700;letter-spacing:1px;margin-top:2px}
+.badge{font-size:10px;background:#FFD8A6;color:#7A1F1F;padding:3px 8px;border-radius:20px;margin-left:6px;font-weight:800}
+.cart-btn{position:relative;width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,.15);border:none;display:flex;align-items:center;justify-content:center;cursor:pointer}
+.cart-count{position:absolute;top:-4px;right:-4px;min-width:20px;height:20px;padding:0 4px;background:#FFD8A6;color:#7A1F1F;font-size:11px;font-weight:800;border-radius:20px;display:flex;align-items:center;justify-content:center}
+.search-wrap{position:relative}
+.search-icon{position:absolute;left:12px;top:50%;transform:translateY(-50%);color:#9C2C2C;display:flex}
+.search-input{width:100%;height:44px;background:#fff;border-radius:24px;padding-left:44px;padding-right:16px;font-size:14px;color:#7A1F1F;border:2px solid transparent;outline:none}
+.search-input:focus{border-color:#FF8A4C}
+.flash{margin:16px 16px 0;border-radius:20px;background:linear-gradient(135deg,#7A1F1F,#C0392B);padding:16px;position:relative;overflow:hidden}
+.flash-top{display:flex;align-items:center;justify-content:space-between}
+.flash-left{display:flex;align-items:center;gap:12px}
+.flash-icon{width:44px;height:44px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;font-size:20px}
+.flash-title{color:#fff;font-weight:800;font-size:16px;display:flex;align-items:center;gap:8px}
+.flash-off{background:#FFD8A6;color:#7A1F1F;font-size:10px;font-weight:800;padding:3px 8px;border-radius:20px}
+.flash-sub{color:rgba(255,247,232,.9);font-size:12px;margin-top:2px}
+.timer{display:flex;gap:6px;align-items:center}
+.timer-box{background:#fff;color:#7A1F1F;font-weight:800;font-size:14px;width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center}
+.timer-sep{color:#fff;font-weight:700}
+.flash-bottom{display:flex;gap:8px;margin-top:12px}
+.flash-chip{flex:1;background:rgba(255,255,255,.12);backdrop-filter:blur(4px);border-radius:20px;padding:8px 12px;display:flex;align-items:center;justify-content:space-between;font-size:11px;color:rgba(255,255,255,.9);font-weight:600}
+.cat-section{margin-top:20px;padding:0 16px}
+.cat-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+.cat-title{font-weight:800;color:#7A1F1F;font-size:15px}
+.cat-more{color:#C0392B;font-size:12px;font-weight:600}
+.cat-list{display:flex;gap:8px;overflow-x:auto;padding-bottom:4px;scrollbar-width:none}
+.cat-list::-webkit-scrollbar{display:none}
+.cat-btn{white-space:nowrap;padding:0 14px;height:36px;border-radius:20px;font-size:13px;font-weight:600;border:1px solid #F5D5A6;background:#fff;color:#9C2C2C;cursor:pointer;transition:.2s}
+.cat-btn.active{background:#7A1F1F;color:#fff;border-color:#7A1F1F;box-shadow:0 2px 8px rgba(122,31,31,.25)}
+.grid{padding:12px;display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.card{background:#fff;border-radius:18px;overflow:hidden;border:1px solid #F5D5A6;box-shadow:0 2px 12px rgba(122,31,31,.06);cursor:pointer;transition:.2s}
+.card:hover{box-shadow:0 6px 20px rgba(122,31,31,.12)}
+.card-img-wrap{position:relative;aspect-ratio:1/1;background:#FFF7E8;overflow:hidden}
+.card-img{width:100%;height:100%;object-fit:cover}
+.card-badge{position:absolute;top:8px;left:8px;background:#7A1F1F;color:#fff;font-size:10px;font-weight:800;padding:4px 8px;border-radius:20px}
+.card-heart{position:absolute;top:8px;right:8px;width:28px;height:28px;background:rgba(255,255,255,.9);border-radius:50%;display:flex;align-items:center;justify-content:center;border:none;font-size:14px}
+.card-meta{position:absolute;bottom:8px;left:8px;background:rgba(255,255,255,.92);backdrop-filter:blur(4px);padding:4px 8px;border-radius:20px;display:flex;align-items:center;gap:4px;font-size:11px;font-weight:700;color:#7A1F1F}
+.card-body{padding:12px}
+.card-name{font-weight:700;color:#7A1F1F;font-size:13px;line-height:1.3;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;min-height:34px}
+.card-foot{display:flex;align-items:flex-end;justify-content:space-between;margin-top:8px}
+.card-price{font-weight:800;color:#7A1F1F;font-size:14px}
+.card-price-old{font-size:11px;color:rgba(156,44,44,.5);text-decoration:line-through}
+.card-plus{width:28px;height:28px;border-radius:50%;background:#7A1F1F;display:flex;align-items:center;justify-content:center;border:none}
+.trust{margin:20px 16px 0;background:#fff;border-radius:16px;border:1px solid #F5D5A6;padding:16px;display:flex;gap:12px}
+.trust-icon{width:40px;height:40px;border-radius:50%;background:#FFF7E8;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:18px}
+.trust-title{font-weight:700;color:#7A1F1F;font-size:13px}
+.trust-desc{font-size:11px;color:#9C2C2C;margin-top:4px;line-height:1.5}
+.overlay{position:fixed;top:0;left:0;right:0;bottom:64px;z-index:200;display:none;justify-content:center}
+.overlay.show{display:flex}
+.overlay-bg{position:absolute;inset:0;bottom:0;background:rgba(0,0,0,.6);backdrop-filter:blur(3px);z-index:201}
+.sheet{position:absolute;left:0;right:0;bottom:0;transform:none;width:100%;max-width:100%;background:#FFF7E8;border-radius:28px 28px 0 0;max-height:calc(92vh - 64px);display:flex;flex-direction:column;animation:slideUpFull .32s cubic-bezier(.16,1,.3,1);z-index:202;box-shadow:0 -10px 40px rgba(0,0,0,.3)}
+@keyframes slideUpFull{from{transform:translateY(100%)}to{transform:translateY(0)}}
+.handle{width:40px;height:6px;background:#F5D5A6;border-radius:20px;margin:12px auto 8px}
+.detail-img{position:relative;height:280px;background:#fff}
+.detail-img img{width:100%;height:100%;object-fit:cover}
+.detail-back{position:absolute;top:16px;left:16px;width:36px;height:36px;background:rgba(255,255,255,.9);border-radius:50%;border:none;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.1)}
+.detail-heart{position:absolute;top:16px;right:16px;width:36px;height:36px;background:rgba(255,255,255,.9);border-radius:50%;border:none;display:flex;align-items:center;justify-content:center;cursor:pointer}
+.detail-overlay{position:absolute;bottom:0;left:0;right:0;padding:16px;background:linear-gradient(to top,rgba(0,0,0,.6),transparent)}
+.detail-rating{background:rgba(255,255,255,.95);padding:6px 12px;border-radius:20px;display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:800;color:#7A1F1F}
+.detail-content{overflow-y:auto;flex:1;padding:20px 20px 0}
+.detail-name{font-weight:800;color:#7A1F1F;font-size:20px;line-height:1.2}
+.detail-price-row{display:flex;align-items:baseline;gap:12px;margin-top:8px;flex-wrap:wrap}
+.detail-price{font-weight:800;color:#7A1F1F;font-size:22px}
+.detail-old{font-size:14px;color:rgba(156,44,44,.5);text-decoration:line-through}
+.detail-save{background:#7A1F1F;color:#fff;font-size:11px;font-weight:800;padding:4px 8px;border-radius:20px}
+.detail-desc{font-size:13px;color:#9C2C2C;margin-top:12px;line-height:1.6}
+.variant-title{font-weight:700;color:#7A1F1F;font-size:14px;margin:20px 0 12px}
+.variant-list{display:flex;flex-wrap:wrap;gap:8px}
+.variant-btn{padding:0 14px;height:36px;border-radius:20px;font-size:13px;font-weight:600;border:1px solid #F5D5A6;background:#fff;color:#9C2C2C;cursor:pointer}
+.variant-btn.active{background:#7A1F1F;color:#fff;border-color:#7A1F1F}
+.note-title{font-weight:700;color:#7A1F1F;font-size:14px;margin:20px 0 8px}
+.note-input{width:100%;height:72px;background:#fff;border:1px solid #F5D5A6;border-radius:14px;padding:12px;font-size:13px;color:#7A1F1F;outline:none;resize:none}
+.note-input:focus{border-color:#FF8A4C}
+.ship-info{margin-top:20px;display:flex;align-items:center;gap:8px;font-size:12px;color:#9C2C2C;background:#fff;border-radius:12px;padding:12px;border:1px solid #F5D5A6}
+.sheet-foot{padding:16px;background:#fff;border-top:1px solid #F5D5A6;display:flex;gap:12px}
+.btn-close{height:48px;padding:0 20px;border-radius:24px;border:1px solid #F5D5A6;background:#fff;color:#7A1F1F;font-weight:600;font-size:14px;cursor:pointer}
+.btn-add{flex:1;height:48px;border-radius:24px;border:none;background:#7A1F1F;color:#fff;font-weight:700;font-size:14px;display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer}
+.cart-header{padding:16px 20px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #F5D5A6}
+.cart-title{font-weight:800;color:#7A1F1F;font-size:18px}
+.cart-close{width:32px;height:32px;border-radius:50%;background:#fff;border:1px solid #F5D5A6;display:flex;align-items:center;justify-content:center;cursor:pointer}
+.cart-body{flex:1;overflow-y:auto;padding:16px}
+.empty{text-align:center;padding:60px 20px}
+.empty-icon{width:80px;height:80px;margin:0 auto 16px;background:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;border:1px solid #F5D5A6;font-size:32px}
+.cart-item{background:#fff;border-radius:16px;padding:12px;display:flex;gap:12px;border:1px solid #F5D5A6;margin-bottom:12px}
+.cart-item img{width:80px;height:80px;border-radius:12px;object-fit:cover}
+.cart-item-info{flex:1;min-width:0}
+.cart-item-name{font-weight:700;color:#7A1F1F;font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cart-item-var{font-size:11px;color:#9C2C2C;margin-top:4px}
+.cart-item-foot{display:flex;align-items:center;justify-content:space-between;margin-top:12px}
+.cart-item-price{font-weight:800;color:#7A1F1F;font-size:14px}
+.qty{display:flex;align-items:center;gap:8px}
+.qty-btn{width:32px;height:32px;border-radius:50%;border:1px solid #F5D5A6;background:#FFF7E8;display:flex;align-items:center;justify-content:center;cursor:pointer}
+.qty-btn.dark{background:#7A1F1F;border-color:#7A1F1F}
+.qty-num{width:24px;text-align:center;font-weight:700;color:#7A1F1F;font-size:14px}
+.summary{background:#fff;border-radius:16px;padding:16px;border:1px solid #F5D5A6;margin-top:16px}
+.summary-row{display:flex;justify-content:space-between;font-size:13px;margin-bottom:8px}
+.summary-row.muted{color:#9C2C2C}
+.summary-row.total{font-weight:800;color:#7A1F1F;font-size:15px;border-top:1px solid #F5D5A6;padding-top:12px;margin-top:8px}
+.checkout-foot{padding:16px;background:#fff;border-top:1px solid #F5D5A6}
+.btn-checkout{width:100%;height:48px;border-radius:24px;border:none;background:#7A1F1F;color:#fff;font-weight:800;font-size:15px;display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer}
+.checkout-note{text-align:center;font-size:11px;color:#9C2C2C;margin-top:8px}
+.app-exit{display:none !important}
+.exit-hint{display:none !important}
+.bottom-nav{
+  position:fixed;
+  bottom:0;
+  left:0;
+  right:0;
+  width:100%;
+  max-width:100%;
+  height:64px;
+  background:#fff;
+  border-top:1px solid #F5D5A6;
+  display:flex;
+  justify-content:space-around;
+  align-items:center;
+  z-index:500;
+  box-shadow:0 -4px 20px rgba(122,31,31,.08);
+  padding-bottom:4px;
+}
+.bottom-nav-item{
+  flex:1;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:3px;
+  background:none;
+  border:none;
+  cursor:pointer;
+  color:#9C2C2C;
+  font-size:10px;
+  font-weight:600;
+  transition:.2s;
+  position:relative;
+  padding:6px 0;
+}
+.bottom-nav-item.active{color:#7A1F1F}
+.bottom-nav-item.active svg{stroke:#7A1F1F}
+.bottom-nav-item svg{width:22px;height:22px;stroke-width:1.8}
+.bottom-nav-badge{
+  position:absolute;
+  top:2px;
+  right:18px;
+  min-width:18px;
+  height:18px;
+  padding:0 4px;
+  background:#FFD8A6;
+  color:#7A1F1F;
+  font-size:10px;
+  font-weight:800;
+  border-radius:20px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+</style>
+</head>
+<body>
+<div id="kopi-app">
+  <div class="header">
+    <div class="header-top">
+      <div class="logo-wrap">
+        <div class="logo-circle">🌶️</div>
+        <div>
+          <div class="logo-text">Kedai Yasika</div>
+          <div class="logo-sub">SEBLAK TOPPING SERIBUAN</div>
+        </div>
+        <span class="badge">NYEMEK / BIASA</span>
+      </div>
+      <button class="cart-btn" id="cartBtn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" width="20" height="20"><path d="M6 6h15l-1.5 9h-13z"/><path d="M6 6L5 2H2"/><circle cx="9" cy="20" r="1.5" fill="white" stroke="none"/><circle cx="18" cy="20" r="1.5" fill="white" stroke="none"/></svg>
+        <span class="cart-count" id="cartCount" style="display:none">0</span>
+      </button>
+    </div>
+    <div class="search-wrap">
+      <span class="search-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20"><circle cx="11" cy="11" r="6"/><path d="M20 20l-3.5-3.5"/></svg>
+      </span>
+      <input class="search-input" id="searchInput" placeholder="Cari seblak & topping favoritmu..."/>
+    </div>
+  </div>
+
+  <div class="flash">
+    <div class="flash-top">
+      <div class="flash-left">
+        <div class="flash-icon">🔥</div>
+        <div>
+          <div class="flash-title">TOPPING SERBA 1000 <span class="flash-off">MIN 5K</span></div>
+          <div class="flash-sub">Pilihan kuah: Nyemek / Biasa - Level 0-5</div>
+        </div>
+      </div>
+      <div class="timer"><span class="timer-box" id="h">01</span><span class="timer-sep">:</span><span class="timer-box" id="m">29</span><span class="timer-sep">:</span><span class="timer-box" id="s">45</span></div>
+    </div>
+    <div class="flash-bottom"><div class="flash-chip"><span>🍜 Seblak Spesial Kita</span><span>›</span></div><div class="flash-chip"><span>🧊 Aneka Es Segar</span><span>›</span></div></div>
+  </div>
+
+  <div class="cat-section"><div class="cat-header"><span class="cat-title">Kategori Topping</span><span class="cat-more">Lihat Semua</span></div><div class="cat-list" id="catList"></div></div>
+  <div class="grid" id="grid"></div>
+
+  <div class="trust">
+    <div class="trust-icon">📍</div>
+    <div>
+      <div class="trust-title">Kedai Yasika - Kaliondo, Winong, Gempol, Pasuruan 67155</div>
+      <div class="trust-desc">Sedia Seblak dengan topping serba seribuan. Pilihan kuah Nyemek / Biasa. Level pedas 0-5. Minimal pembelian Rp 5.000,-. Bisa pesan antar! WA Kak Retno 0857366667205. Sedia aneka es segar!</div>
+    </div>
+  </div>
+
+  <!-- POPUP AWAL MENUTUPI HEADER - KEDAI YASIKA -->
+  <div id="welcomeOverlay" style="position:fixed;inset:0;z-index:300;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,0.6);backdrop-filter:blur(4px);padding:16px">
+    <div style="position:relative;width:100%;max-width:380px;background:#FFF7E8;border-radius:24px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,0.35);border:1px solid #F5D5A6;animation:popIn 0.45s cubic-bezier(0.34,1.56,0.64,1)">
+      <button id="welcomeCloseX" style="position:absolute;top:12px;right:12px;z-index:10;width:28px;height:28px;border-radius:50%;background:rgba(0,0,0,0.4);backdrop-filter:blur(4px);color:#fff;display:flex;align-items:center;justify-content:center;border:1px solid rgba(255,255,255,0.2);cursor:pointer">
+        <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" width="14" height="14"><path d="M18 6L6 18M6 6l12 12"/></svg>
+      </button>
+      <div style="position:relative;height:220px;background:#5a1a0a">
+        <img src="https://images.unsplash.com/photo-1555126634-323283e090fa?w=600" alt="seblak promo" style="width:100%;height:100%;object-fit:cover"/>
+        <div style="position:absolute;inset:0;background:linear-gradient(to top, rgba(90,26,10,0.92), rgba(0,0,0,0.2), transparent)"></div>
+        <div style="position:absolute;top:16px;left:16px;background:#FFD8A6;color:#7A1F1F;font-size:11px;font-weight:900;padding:5px 12px;border-radius:20px;transform:rotate(-3deg);box-shadow:0 2px 8px rgba(0,0,0,0.2);border:1px solid #E8B87A">KEDAI YASIKA • TOPPING SERIBUAN</div>
+        <div style="position:absolute;bottom:12px;left:16px;right:16px">
+          <div style="font-family:'Pacifico',cursive;color:#fff;font-size:30px;line-height:0.9;text-shadow:0 2px 8px rgba(0,0,0,0.5)">Seblak<br/>Spesial</div>
+          <div style="color:#FFD8A6;font-weight:900;font-size:11px;letter-spacing:1.5px;margin-top:4px">PILIHAN KUAH: NYEMEK / BIASA</div>
+        </div>
+      </div>
+      <div style="padding:16px;text-align:center">
+        <div style="display:inline-flex;align-items:center;gap:6px;background:#FFE4B5;border:1px solid #F5D5A6;color:#7A1F1F;font-size:12px;font-weight:800;padding:5px 12px;border-radius:20px">
+          🌶️ SPESIAL TOPPING Rp.1.000,- / TOPPING
+        </div>
+        <h3 style="font-weight:800;font-size:18px;line-height:1.2;margin-top:12px;color:#7A1F1F;letter-spacing:-0.2px">Seblak Enak Cuma <span style="color:#C0392B">5RB</span>,<br/>Topping Bebas Pilih!</h3>
+        <p style="font-size:13px;color:#9C2C2C;margin-top:6px;line-height:1.4">Aneka Kerupuk, Sosis, Bakso, Chikuwa, Mie, Telur. Level pedas 0-5. Bisa pesan antar!</p>
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-top:12px;text-align:left">
+          <div style="background:#fff;border:1px solid #F5D5A6;border-radius:12px;padding:8px;text-align:center"><div style="font-weight:900;font-size:13px;color:#7A1F1F">Rp 1K</div><div style="font-size:11px;color:#9C2C2C;font-weight:600">Per Topping</div></div>
+          <div style="background:#fff;border:1px solid #F5D5A6;border-radius:12px;padding:8px;text-align:center"><div style="font-weight:900;font-size:13px;color:#7A1F1F">Level 0-5</div><div style="font-size:11px;color:#9C2C2C;font-weight:600">Pedas</div></div>
+          <div style="background:#fff;border:1px solid #F5D5A6;border-radius:12px;padding:8px;text-align:center"><div style="font-weight:900;font-size:13px;color:#7A1F1F">Es Segar</div><div style="font-size:11px;color:#9C2C2C;font-weight:600">Aneka Es</div></div>
+        </div>
+        <div style="margin-top:12px;background:#7A1F1F;color:#FFD8A6;font-size:11px;font-weight:800;padding:6px 12px;border-radius:8px">PEMBELIAN MINIMAL 5.000,- | WA 0857366667205 (Kak Retno)</div>
+        <button id="welcomeClaimBtn" style="margin-top:12px;width:100%;height:48px;border-radius:24px;background:linear-gradient(to right, #7A1F1F, #C0392B);color:#FFF7E8;font-weight:800;font-size:14px;box-shadow:0 6px 16px rgba(122,31,31,0.35);border:1px solid #5D1F1F;cursor:pointer">PESAN SEBLAK SEKARANG →</button>
+        <button id="welcomeClose" style="margin-top:8px;font-size:13px;color:rgba(156,44,44,0.6);font-weight:500;background:none;border:none;cursor:pointer">Nanti aja, lihat menu dulu</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="overlay" id="detailOverlay"><div class="overlay-bg" id="detailBg"></div><div class="sheet"><div class="handle"></div><div class="detail-img"><img id="detailImg" src=""/><button class="detail-back" id="detailBack"><svg viewBox="0 0 24 24" fill="none" stroke="#7A1F1F" stroke-width="2" width="20" height="20"><path d="M15 18l-6-6 6-6"/></svg></button><button class="detail-heart"><svg viewBox="0 0 24 24" fill="none" stroke="#7A1F1F" stroke-width="2" width="20" height="20"><path d="M12 21s-6-4.5-6-9a4 4 0 0 1 7-2.65A4 4 0 0 1 20 12c0 4.5-6 9-6 9z"/></svg></button><div class="detail-overlay"><span class="detail-rating" id="detailRating"></span></div></div><div class="detail-content"><div class="detail-name" id="detailName"></div><div class="detail-price-row"><span class="detail-price" id="detailPrice"></span><span class="detail-old" id="detailOld"></span><span class="detail-save" id="detailSave"></span></div><div class="detail-desc" id="detailDesc"></div><div class="variant-title">Pilih Kuah</div><div class="variant-list" id="variantList"></div><div class="variant-title">Level Pedas (0-5)</div><div class="variant-list" id="levelList"></div><div class="note-title">Catatan Topping (Opsional)</div><textarea class="note-input" id="noteInput" placeholder="Contoh: topping kerupuk, sosis, mie, level 3..."></textarea><div class="ship-info"><span>🔥</span><span>Minimal 5K - Topping serba 1000. WA 0857366667205 (Kak Retno) - Kaliondo, Winong, Gempol, Pasuruan</span></div><div style="height:20px"></div></div><div class="sheet-foot"><button class="btn-close" id="detailClose">Tutup</button><button class="btn-add" id="addToCartBtn"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" width="18" height="18"><path d="M6 6h15l-1.5 9h-13z"/><path d="M6 6L5 2H2"/></svg> Tambah Keranjang</button></div></div></div>
+
+  <div class="overlay" id="cartOverlay"><div class="overlay-bg" id="cartBg"></div><div class="sheet"><div class="handle"></div><div class="cart-header"><span class="cart-title" id="cartTitle">Keranjang (0)</span><button class="cart-close" id="cartCloseBtn"><svg viewBox="0 0 24 24" fill="none" stroke="#7A1F1F" stroke-width="2" width="18" height="18"><path d="M18 6L6 18M6 6l12 12"/></svg></button></div><div class="cart-body" id="cartBody"></div><div class="checkout-foot" id="checkoutFoot"><button class="btn-checkout" id="checkoutBtn">Checkout <span id="checkoutTotal"></span></button><div class="checkout-note">Pesan antar via WA Kak Retno 0857366667205 - Kaliondo, Winong, Gempol</div></div></div></div>
+</div>
+
+<nav class="bottom-nav" id="bottomNav">
+  <button class="bottom-nav-item active" data-nav="home">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M9 22V12h6v10"/></svg>
+    <span>Home</span>
+  </button>
+  <button class="bottom-nav-item" data-nav="live">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2a2 2 0 0 1 2 2v2h4a2 2 0 0 1 2 2v4a2 2 0 0 1-2 2h-2"/><path d="M8 10h8"/><path d="M8 14h5"/><circle cx="12" cy="12" r="10"/></svg>
+    <span>Menu</span>
+  </button>
+  <button class="bottom-nav-item" data-nav="wa" id="waNavBtn" style="color:#25D366">
+    <svg viewBox="0 0 24 24" fill="#25D366" width="22" height="22"><path d="M19.05 4.91A9.82 9.82 0 0 0 12.03 2C6.49 2 2.02 6.5 2.02 12.06c0 1.77.46 3.5 1.34 5.02L2 22l5.06-1.33a9.78 9.78 0 0 0 4.67 1.19h.01c5.54 0 10.01-4.5 10.01-10.05c0-2.68-1.04-5.21-2.94-7.1zm-7.02 15.1h-.01a8.11 8.11 0 0 1-4.14-1.13l-.3-.18l-3 0.79l0.8-2.93l-.2-.3A8.1 8.1 0 0 1 3.9 12.06c0-4.49 3.64-8.14 8.13-8.14c2.17 0 4.21 0.85 5.74 2.39a8.07 8.07 0 0 1 2.38 5.76c0 4.49-3.64 8.14-8.12 8.14zm4.46-6.1c-.24-.12-1.43-.71-1.65-.79c-.22-.08-.38-.12-.54.12c-.16.24-.62.79-.76.95c-.14.16-.28.18-.52.06c-.24-.12-1.01-.37-1.92-1.19c-.71-.64-1.19-1.42-1.33-1.66c-.14-.24-.01-.37.11-.49c.11-.11.24-.28.36-.42c.12-.14.16-.24.24-.4c.08-.16.04-.3-.02-.42c-.06-.12-.54-1.3-.74-1.78c-.2-.46-.4-.4-.54-.41h-.46c-.16 0-.42.06-.64.3c-.22.24-.84.82-.84 2c0 1.18.86 2.32.98 2.48c.12.16 1.7 2.6 4.12 3.64c.58.25 1.03.4 1.38.51c.58.18 1.1.16 1.52.1c.46-.07 1.43-.59 1.63-1.15c.2-.57.2-1.05.14-1.15c-.06-.1-.22-.16-.46-.28z"/></svg>
+    <span>WhatsApp</span>
+  </button>
+  <button class="bottom-nav-item" data-nav="notif">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M18 8A6 6 0 0 0 6 8c0 7-6 9-6 9h18s-6-2-6-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+    <span>Notifikasi</span>
+    <span class="bottom-nav-badge">9+</span>
+  </button>
+  <button class="bottom-nav-item" data-nav="saya">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+    <span>Saya</span>
+  </button>
+</nav>
+
+<script>
+var products=[
+{id:1,name:"Seblak Spesial Kita - Original Komplit",price:5000,old:10000,rating:4.9,sold:"1.2rb",badge:"SPESIAL",img:"https://images.unsplash.com/photo-1569718212165-3a8278d5f624?w=400",vars:["Nyemek","Biasa"],desc:"Seblak spesial kita, kuah bisa pilih Nyemek (kental) atau Biasa (berkuah). Topping serba Rp 1.000. Minimal pembelian Rp 5.000. Level pedas 0-5.",levels:["0","1","2","3","4","5"]},
+{id:2,name:"Seblak Aneka Kerupuk + Mie",price:7000,old:12000,rating:4.8,sold:"890",badge:"TOPPING 1K",img:"https://images.unsplash.com/photo-1555126634-323283e090fa?w=400",vars:["Nyemek","Biasa"],desc:"Seblak dengan topping aneka kerupuk (kerupuk bawang, kerupuk mawar) + mie. Topping serba seribuan.",levels:["0","1","2","3","4","5"]},
+{id:3,name:"Seblak Sosis Bakso Komplit",price:8000,old:15000,rating:4.9,sold:"650",badge:"FAVORIT",img:"https://images.unsplash.com/photo-1548943487-a2e4e43b4853?w=400",vars:["Nyemek","Biasa"],desc:"Seblak topping sosis + bakso sapi. Pilihan kuah Nyemek / Biasa. Level pedas bisa request 0-5.",levels:["0","1","2","3","4","5"]},
+{id:4,name:"Seblak Chikuwa Telur",price:7000,old:13000,rating:4.8,sold:"520",badge:"BARU",img:"https://images.unsplash.com/photo-1569718212165-3a8278d5f624?w=400",vars:["Nyemek","Biasa"],desc:"Seblak topping chikuwa + telur. Gurih dan kenyang. Minimal 5K saja.",levels:["0","1","2","3","4","5"]},
+{id:5,name:"Es Coklat Segar",price:5000,old:8000,rating:4.9,sold:"430",badge:"ES SEGAR",img:"https://images.unsplash.com/photo-1461023058943-07fcbe16d735?w=400",vars:["Es"],desc:"Aneka es segar - Es Coklat, Es Teh Lemon, Es Kopi Susu. Segar setelah makan seblak pedas.",levels:["Manis","Less Sugar"]},
+{id:6,name:"Es Teh Lemon + Es Kopi Susu",price:5000,old:8000,rating:4.8,sold:"380",badge:"ES SEGAR",img:"https://images.unsplash.com/photo-1556679343-c7306c1976bc?w=400",vars:["Es"],desc:"Sedia aneka es segar. Bisa pesan antar ke Kaliondo, Winong, Gempol.",levels:["Manis","Less Sugar"]}
+];
+var cats=["Semua","Aneka Kerupuk","Sosis","Bakso","Chikuwa","Mie","Telur","Es Segar"];
+var activeCat="Semua",search="",cart=[],selected=null,selectedVar="",selectedLevel="1";
+
+function formatPrice(n){return "Rp"+n.toLocaleString("id-ID")}
+function renderCats(){
+  var el=document.getElementById("catList");var h="";
+  for(var i=0;i<cats.length;i++) h+='<button class="cat-btn '+(cats[i]===activeCat?'active':'')+'" data-cat="'+cats[i]+'">'+cats[i]+'</button>';
+  el.innerHTML=h;
+  var btns=document.querySelectorAll(".cat-btn");
+  for(var j=0;j<btns.length;j++) btns[j].onclick=function(){activeCat=this.getAttribute("data-cat");renderCats();renderProducts()}
+}
+function renderProducts(){
+  var el=document.getElementById("grid");var h="";
+  for(var i=0;i<products.length;i++){
+    var p=products[i];
+    if(activeCat!=="Semua" && p.name.indexOf(activeCat)===-1 && activeCat!=="Es Segar" && p.name.indexOf("Es")!==-1 && activeCat!=="Es Segar") {
+      if(activeCat!=="Semua" && p.name.toLowerCase().indexOf(activeCat.toLowerCase())===-1 && p.badge.indexOf(activeCat)===-1) {
+        // simple filter
+      }
+    }
+    if(activeCat!=="Semua"){
+      var match = p.name.toLowerCase().indexOf(activeCat.toLowerCase())!==-1 || p.badge.toLowerCase().indexOf(activeCat.toLowerCase())!==-1;
+      if(activeCat==="Es Segar") match = p.name.toLowerCase().indexOf("es")!==-1;
+      if(!match) continue;
+    }
+    if(search && p.name.toLowerCase().indexOf(search.toLowerCase())===-1) continue;
+    h+='<div class="card" data-id="'+p.id+'"><div class="card-img-wrap"><img class="card-img" src="'+p.img+'"/><span class="card-badge">'+p.badge+'</span><button class="card-heart">❤️</button><span class="card-meta">⭐ '+p.rating+'</span></div><div class="card-body"><div class="card-name">'+p.name+'</div><div class="card-foot"><div><div class="card-price">'+formatPrice(p.price)+'</div><div class="card-price-old">'+(p.old?formatPrice(p.old):'')+'</div></div><button class="card-plus"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" width="14" height="14"><path d="M12 5v14M5 12h14"/></svg></button></div></div></div>';
+  }
+  el.innerHTML=h;
+  var cards=document.querySelectorAll(".card");
+  for(var k=0;k<cards.length;k++) cards[k].onclick=function(){openDetail(parseInt(this.getAttribute("data-id")))}
+}
+function openDetail(id){
+  for(var i=0;i<products.length;i++) if(products[i].id===id) selected=products[i];
+  if(!selected) return;
+  selectedVar=selected.vars[0];
+  selectedLevel=selected.levels[0];
+  document.getElementById("detailImg").src=selected.img;
+  document.getElementById("detailName").textContent=selected.name;
+  document.getElementById("detailPrice").textContent=formatPrice(selected.price);
+  document.getElementById("detailOld").textContent=selected.old?formatPrice(selected.old):"";
+  document.getElementById("detailSave").textContent=selected.old?"Hemat "+formatPrice(selected.old-selected.price):"";
+  document.getElementById("detailSave").style.display=selected.old?"inline-block":"none";
+  document.getElementById("detailDesc").textContent=selected.desc+" Alamat: Kaliondo, Winong, Gempol, Pasuruan 67155. WA: 0857366667205 (Kak Retno). Pembelian minimal Rp 5.000. Topping Rp 1.000 / topping.";
+  document.getElementById("detailRating").innerHTML='⭐ '+selected.rating+' ('+selected.sold+' terjual)';
+  var vh="";
+  for(var j=0;j<selected.vars.length;j++) vh+='<button class="variant-btn '+(selectedVar===selected.vars[j]?'active':'')+'" data-var="'+selected.vars[j]+'">'+selected.vars[j]+'</button>';
+  document.getElementById("variantList").innerHTML=vh;
+  var lh="";
+  for(var l=0;l<selected.levels.length;l++) lh+='<button class="variant-btn '+(selectedLevel===selected.levels[l]?'active':'')+'" data-level="'+selected.levels[l]+'">'+(selected.levels[l]==="0"?"Level 0 (Tidak Pedas)":"Level "+selected.levels[l])+'</button>';
+  document.getElementById("levelList").innerHTML=lh;
+  var vbs=document.querySelectorAll("#variantList .variant-btn");
+  for(var k=0;k<vbs.length;k++) vbs[k].onclick=function(){selectedVar=this.getAttribute("data-var");var all=document.querySelectorAll("#variantList .variant-btn");for(var x=0;x<all.length;x++) all[x].classList.remove("active");this.classList.add("active")}
+  var lbs=document.querySelectorAll("#levelList .variant-btn");
+  for(var k=0;k<lbs.length;k++) lbs[k].onclick=function(){selectedLevel=this.getAttribute("data-level");var all=document.querySelectorAll("#levelList .variant-btn");for(var x=0;x<all.length;x++) all[x].classList.remove("active");this.classList.add("active")}
+  document.getElementById("noteInput").value="";
+  document.getElementById("detailOverlay").classList.add("show");
+}
+function closeDetail(){document.getElementById("detailOverlay").classList.remove("show")}
+function addToCart(){
+  if(!selected) return;
+  var note=document.getElementById("noteInput").value;
+  var idx=-1;
+  for(var i=0;i<cart.length;i++) if(cart[i].id===selected.id && cart[i].variant===selectedVar && cart[i].level===selectedLevel) idx=i;
+  if(idx>=0) cart[idx].qty++;
+  else cart.push({id:selected.id,name:selected.name,price:selected.price,img:selected.img,variant:selectedVar,level:selectedLevel,note:note,qty:1});
+  closeDetail();
+  updateCartUI();
+  openCart();
+}
+function updateCartUI(){
+  var count=0,total=0;
+  for(var i=0;i<cart.length;i++){count+=cart[i].qty;total+=cart[i].price*cart[i].qty}
+  var cc=document.getElementById("cartCount");
+  if(count>0){cc.style.display="flex";cc.textContent=count} else cc.style.display="none";
+  document.getElementById("cartTitle").textContent="Keranjang ("+count+")";
+  var body=document.getElementById("cartBody");
+  var foot=document.getElementById("checkoutFoot");
+  if(cart.length===0){
+    body.innerHTML='<div class="empty"><div class="empty-icon">🛒</div><div style="font-weight:700;color:#7A1F1F">Keranjang masih kosong</div><div style="font-size:13px;color:#9C2C2C;margin-top:4px">Yuk tambah seblak topping seribuan!</div><button class="btn-close" style="margin-top:20px;height:44px;padding:0 24px;border-radius:24px;background:#7A1F1F;color:#fff;border:none" id="emptyShop">Mulai Pesan</button></div>';
+    foot.style.display="none";
+    var es=document.getElementById("emptyShop"); if(es) es.onclick=function(){closeCart()};
+    return;
+  }
+  var html="";
+  for(var k=0;k<cart.length;k++){
+    var it=cart[k];
+    html+='<div class="cart-item"><img src="'+it.img+'" alt=""/><div class="cart-item-info"><div class="cart-item-name">'+it.name+'</div><div class="cart-item-var">Kuah: '+it.variant+' | Level: '+it.level+(it.note?' - '+it.note:'')+'</div><div class="cart-item-foot"><span class="cart-item-price">'+formatPrice(it.price)+'</span><div class="qty"><button class="qty-btn" data-idx="'+k+'" data-act="minus">🗑️</button><span class="qty-num">'+it.qty+'</span><button class="qty-btn dark" data-idx="'+k+'" data-act="plus">+</button></div></div></div></div>';
+  }
+  var ship=0;var disc=total>10000?1000:0;var grand=total+ship-disc;
+  html+='<div class="summary"><div class="summary-row muted"><span>Subtotal</span><span style="font-weight:600;color:#7A1F1F">'+formatPrice(total)+'</span></div><div class="summary-row muted"><span>Ongkir</span><span style="font-weight:600;color:#7A1F1F">Gratis Antar</span></div>'+(disc?'<div class="summary-row muted"><span>Diskon</span><span style="font-weight:600;color:green">- '+formatPrice(disc)+'</span></div>':'')+'<div class="summary-row total"><span>Total</span><span>'+formatPrice(grand)+'</span></div><div style="margin-top:8px;font-size:11px;color:#9C2C2C">Alamat: Kaliondo, Winong, Gempol, Pasuruan 67155 | Min. 5K | Topping 1K</div></div>';
+  body.innerHTML=html;
+  document.getElementById("checkoutTotal").textContent=" - Bayar "+formatPrice(grand);
+  foot.style.display="block";
+  var qbs=document.querySelectorAll(".qty-btn");
+  for(var q=0;q<qbs.length;q++) qbs[q].onclick=function(){
+    var idx=parseInt(this.getAttribute("data-idx"));var act=this.getAttribute("data-act");
+    if(act==="plus") cart[idx].qty++; else{cart[idx].qty--;if(cart[idx].qty<=0) cart.splice(idx,1)}
+    updateCartUI();
+  }
+}
+function openCart(){document.getElementById("cartOverlay").classList.add("show")}
+function closeCart(){document.getElementById("cartOverlay").classList.remove("show")}
+document.getElementById("searchInput").addEventListener("input",function(){search=this.value;renderProducts()});
+document.getElementById("cartBtn").onclick=openCart;
+document.getElementById("cartBg").onclick=closeCart;
+document.getElementById("cartCloseBtn").onclick=closeCart;
+document.getElementById("detailBg").onclick=closeDetail;
+document.getElementById("detailBack").onclick=closeDetail;
+document.getElementById("detailClose").onclick=closeDetail;
+document.getElementById("addToCartBtn").onclick=addToCart;
+document.getElementById("checkoutBtn").onclick=function(){
+  var waMsg = "Halo Kak Retno, saya mau pesan seblak:%0A";
+  for(var i=0;i<cart.length;i++){waMsg += "- "+cart[i].name+" (Kuah "+cart[i].variant+", Level "+cart[i].level+") x"+cart[i].qty+"%0A"}
+  waMsg += "%0AAlamat antar: Kaliondo, Winong, Gempol, Pasuruan%0A";
+  window.open("https://wa.me/62857366667205?text="+waMsg,"_blank");
+  cart=[];updateCartUI();closeCart()
+};
+document.getElementById("waNavBtn").onclick=function(){
+  var waMsg = "Halo Kak Retno, saya mau pesan seblak di Kedai Yasika%0AAlamat: Kaliondo, Winong, Gempol, Pasuruan 67155";
+  window.open("https://wa.me/62857366667205?text="+waMsg,"_blank")
+};
+document.getElementById("welcomeClose").onclick=function(){document.getElementById("welcomeOverlay").style.display="none"};
+document.getElementById("welcomeCloseX").onclick=function(){document.getElementById("welcomeOverlay").style.display="none"};
+document.getElementById("welcomeClaimBtn").onclick=function(){document.getElementById("welcomeOverlay").style.display="none"};
+document.getElementById("welcomeOverlay").onclick=function(e){if(e.target===this) this.style.display="none"};
+var h=1,m=29,s=45;
+setInterval(function(){s--;if(s<0){s=59;m--}if(m<0){m=59;h--}if(h<0){h=1;m=29;s=45}
+var he=document.getElementById("h"); if(he) he.textContent=(h<10?"0":"")+h;
+var me=document.getElementById("m"); if(me) me.textContent=(m<10?"0":"")+m;
+var se=document.getElementById("s"); if(se) se.textContent=(s<10?"0":"")+s;
+},1000);
+renderCats();
+renderProducts();
+updateCartUI();
+</script>
+</body>
+</html>
